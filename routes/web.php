@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,3 +21,8 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/admin/users', [UserController::class, 'index'])->middleware('auth', 'admin');
+Route::put('/users/{user}/activate', [UserController::class, 'activate'])->name('users.activate');
+Route::put('/users/{user}/deactivate', [UserController::class, 'deactivate'])->name('users.deactivate');
+Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+

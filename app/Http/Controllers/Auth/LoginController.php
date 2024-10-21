@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -37,4 +39,27 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
         $this->middleware('auth')->only('logout');
     }
+    
+    public function login(Request $request)
+{
+    $credentials = $request->only('email', 'password');
+
+    if (Auth::attempt($credentials)) {
+        // Verificar si el usuario está activado
+        if (Auth::user()->actived == 0) {
+            Auth::logout(); // Cerrar la sesión inmediatamente
+            return redirect()->back()->withErrors([
+                'email' => 'Tu cuenta aún no ha sido activada.',
+            ]);
+        }
+
+        // Si el usuario está activado, redirige al dashboard
+        return redirect()->intended('dashboard');
+    }
+
+    return back()->withErrors([
+        'email' => 'Credenciales incorrectas',
+    ]);
+}
+
 }

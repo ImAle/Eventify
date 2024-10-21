@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use \App\Models\User;
 
 class DatabaseSeeder extends Seeder
 {
@@ -18,5 +19,17 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+        // Crear usuario administrador
+        User::factory()->create([
+            'name' => 'Administrador',
+            'email' => 'admin@admin.com',
+            'password' => bcrypt('12345678'),
+            'role' => 'admin',
+            'actived' => 1, // Usuario activado
+            'email_confirmed' => 1, // Email confirmado
+        ]);
+
+        // Crear otros usuarios si es necesario
+        User::factory(10)->create();
     }
 }
