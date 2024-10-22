@@ -19,7 +19,7 @@
                             <tr>
                                 <th>Nombre</th>
                                 <th>Email</th>
-                                <th>Acción</th>
+                                <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -28,32 +28,35 @@
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->email }}</td>
                                     <td>
-                                        <!-- Mostrar botón de "Activar" o "Desactivar" según el estado -->
                                         @if($user->actived)
-                                            <form action="{{ route('users.deactivate', $user->id) }}" method="POST">
+                                            <!-- Botón de desactivar -->
+                                            <form action="{{ route('users.deactivate', $user->id) }}" method="POST"
+                                                style="display: inline;">
                                                 @csrf
                                                 @method('PUT')
                                                 <button type="submit" class="btn btn-warning">Desactivar</button>
                                             </form>
                                         @else
-                                            <form action="{{ route('users.activate', $user->id) }}" method="POST">
+                                            <!-- Botón de activar -->
+                                            <form action="{{ route('users.activate', $user->id) }}" method="POST"
+                                                style="display: inline;">
                                                 @csrf
                                                 @method('PUT')
                                                 <button type="submit" class="btn btn-success">Activar</button>
                                             </form>
                                         @endif
-                                    </td>
-                                    <td>
-                                        <!-- Botón de borrar siempre disponible -->
-                                        <form action="{{ route('users.destroy', $user->id) }}" method="POST">
+                                        <!-- Botón de borrar (siempre disponible) -->
+                                        <form action="{{ route('users.destroy', $user->id) }}" method="POST"
+                                            style="display: inline;">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger">Borrar</button>
                                         </form>
                                     </td>
+
+
                                 </tr>
                             @endforeach
-
                         </tbody>
                     </table>
 

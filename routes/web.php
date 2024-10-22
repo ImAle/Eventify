@@ -22,7 +22,7 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/admin/users', [UserController::class, 'index'])->middleware('auth', 'admin');
-Route::put('/users/{user}/activate', [UserController::class, 'activate'])->name('users.activate');
-Route::put('/users/{user}/deactivate', [UserController::class, 'deactivate'])->name('users.deactivate');
+Route::put('/admin/users/activate/{id}', [UserController::class, 'activate'])->name('users.activate');
+Route::put('/admin/users/deactivate/{id}', [UserController::class, 'deactivate'])->name('users.deactivate');
 Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
 

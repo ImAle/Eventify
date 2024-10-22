@@ -10,20 +10,24 @@ class UserController extends Controller
     // Mostrar todos los usuarios desactivados
     public function index()
     {
-        $users = User::where('actived', 0)->get();
+        $users = User::where('role', '!=','admin')->get();
         return view('admin.users', compact('users'));
     }
 
     // Activar usuario
-    public function activate(User $user)
-    {
-        $user->update(['actived' => 1]);
+    public function activate($id)
+    {   
+        $user = User::findOrFail($id);
+        $user-> actived = 1;
+        $user->save();
         return redirect()->back()->with('success', 'Usuario activado.');
     }
 
-    public function deactivate(User $user)
+    public function deactivate($id)
     {
-        $user->update(['actived' => 0]);
+        $user = User::findOrFail($id);
+        $user-> actived = 0;
+        $user->save();
         return redirect()->back()->with('success', 'Usuario desactivado.');
     }
 
