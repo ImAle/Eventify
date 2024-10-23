@@ -30,31 +30,30 @@
                                     <td>
                                         @if($user->actived)
                                             <!-- Botón de desactivar -->
-                                            <form action="{{ route('users.deactivate', $user->id) }}" method="POST"
-                                                style="display: inline;">
+                                            <form action="{{ route('users.deactivate', $user->id) }}" method="POST" style="display: inline;">
                                                 @csrf
                                                 @method('PUT')
                                                 <button type="submit" class="btn btn-warning">Desactivar</button>
                                             </form>
                                         @else
                                             <!-- Botón de activar -->
-                                            <form action="{{ route('users.activate', $user->id) }}" method="POST"
-                                                style="display: inline;">
+                                            <form action="{{ route('users.activate', $user->id) }}" method="POST" style="display: inline;">
                                                 @csrf
                                                 @method('PUT')
                                                 <button type="submit" class="btn btn-success">Activar</button>
                                             </form>
                                         @endif
+
+                                        <!-- Botón de editar -->
+                                        <a href="{{ route('user.edit', $user->id) }}" class="btn btn-info">Editar</a>
+
                                         <!-- Botón de borrar (siempre disponible) -->
-                                        <form action="{{ route('users.destroy', $user->id) }}" method="POST"
-                                            style="display: inline;">
+                                        <form action="{{ route('users.destroy', $user->id) }}" method="POST" onsubmit="return confirmDelete()" style="display: inline;">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger">Borrar</button>
                                         </form>
                                     </td>
-
-
                                 </tr>
                             @endforeach
                         </tbody>
@@ -65,4 +64,11 @@
         </div>
     </div>
 </div>
+
+<script>
+    function confirmDelete() {
+        return confirm('¿Estás seguro de que quieres borrar este usuario?');
+    }
+</script>
+
 @endsection
