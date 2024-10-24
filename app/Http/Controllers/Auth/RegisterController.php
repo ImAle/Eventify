@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
@@ -74,4 +75,9 @@ class RegisterController extends Controller
             'remember_token' => Str::random(10),
         ]);
     }
+
+    protected function registered(Request $request, $user)
+{
+    $user->sendEmailVerificationNotification(); // Envía el correo de verificación
+}
 }

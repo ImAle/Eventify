@@ -18,15 +18,19 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::put('/admin/users/activate/{id}', [UserController::class, 'activate'])->name('users.activate');
-Route::put('/admin/users/deactivate/{id}', [UserController::class, 'deactivate'])->name('users.deactivate');
-Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+Route::get('/not-active', function(){return view('auth.not-active');})->name('not-active');
+
+Route::middleware(['verified', 'active'])->group(function () {
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware(['auth']);
+});
 
 Route::middleware(['admin'])->group(function () {
     Route::get('/admin/users', [UserController::class, 'index'])->middleware('auth')->name('admin.users');
+    Route::put('/admin/users/activate/{id}', [UserController::class, 'activate'])->name('users.activate');
+    Route::put('/admin/users/deactivate/{id}', [UserController::class, 'deactivate'])->name('users.deactivate');
+    Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
     Route::get('/admin/user/{id}/edit', [UserController::class, 'edit'])->name('user.edit');
     Route::put('/admin/user/{id}', [UserController::class, 'update'])->name('user.update');
 });
