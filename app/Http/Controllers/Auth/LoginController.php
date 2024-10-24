@@ -54,7 +54,7 @@ class LoginController extends Controller
         }
 
         // Si el usuario está activado, redirige al dashboard
-        return redirect()->intended('dashboard');
+        return redirect()->intended('home');
     }
 
     return back()->withErrors([
