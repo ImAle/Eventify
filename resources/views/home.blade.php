@@ -18,6 +18,7 @@
 
 
                     {{ __('You are logged in!') }}
+                    <p><strong>Rol:</strong> {{ Auth::user()->role }}</p>
                 </div>
             </div>
         </div>

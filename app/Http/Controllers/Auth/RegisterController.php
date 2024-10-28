@@ -65,12 +65,20 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $profileImagePath = null;
+
+        // Verificar si se ha subido una imagen de perfil
+        if (request()->hasFile('profile_image')) {
+            $profileImagePath = request()->file('profile_image')->store('profile_images', 'public');
+        }
+
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'actived' => 0,
             'role' => $data['role'],
+            'profile_picture' => $profileImagePath,
             'email_confirmed' => 0,
             'remember_token' => Str::random(10),
         ]);
