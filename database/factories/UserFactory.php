@@ -27,7 +27,7 @@ class UserFactory extends Factory
             'email_verified_at' => now(),
             'password' =>  static::$password ??= Hash::make('secret'),
             'remember_token' => Str::random(10),
-            'role' => 'user',
+            'role' => 'u',
             'actived' => 0, // Usuario desactivado por defecto
             'email_confirmed' => 0, // Email no confirmado por defecto
         ];

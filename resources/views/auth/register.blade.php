@@ -75,11 +75,11 @@
                         <div class="form-group row">
                             <div class="col-md-6 offset-md-4 d-flex justify-content-center">
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="role" id="user_role" value="user" {{ old('role') == 'user' ? 'checked' : '' }} required>
+                                    <input class="form-check-input" type="radio" name="role" id="user_role" value="u" {{ old('role') == 'u' ? 'checked' : '' }} required>
                                     <label class="form-check-label" for="user_role">{{ __('User') }}</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="role" id="organizer_role" value="organizer" {{ old('role') == 'organizer' ? 'checked' : '' }}>
+                                    <input class="form-check-input" type="radio" name="role" id="organizer_role" value="o" {{ old('role') == 'o' ? 'checked' : '' }}>
                                     <label class="form-check-label" for="organizer_role">{{ __('Organizer') }}</label>
                                 </div>
                                 @error('role')

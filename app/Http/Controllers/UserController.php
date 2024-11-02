@@ -10,7 +10,7 @@ class UserController extends Controller
     // Mostrar todos los usuarios desactivados
     public function index()
 {
-    $users = User::where('role', '!=', 'admin')
+    $users = User::where('role', '!=', 'a')
                  ->where('deleted', '!=', 1)
                  ->get();
 

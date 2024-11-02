@@ -65,7 +65,7 @@
                                                          document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
-                                    @if (Auth::check() && Auth::user()->role === 'admin')
+                                    @if (Auth::check() && Auth::user()->role === 'a')
                                         <a href="{{route("admin.users") }}" class="btn btn-link">
                                             {{_('Admin Panel')}}
                                         </a>
