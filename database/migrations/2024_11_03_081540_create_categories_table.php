@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
-            $table->enum('name', ['Music', 'Sports', 'Workshop', 'Social', 'Others']);
+            $table->enum('name', ['Music', 'Sports', 'Tech']);
             $table->string('description')->nullable();
             $table->tinyInteger('deleted')->default(0);
             $table->timestamps();

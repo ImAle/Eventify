@@ -37,9 +37,7 @@ class DatabaseSeeder extends Seeder
         $categories = [
             ['name' => 'Music', 'description' => 'All kinds of music events'],
             ['name' => 'Sports', 'description' => 'Sports related events'],
-            ['name' => 'Workshop', 'description' => 'Educational and training workshops'],
-            ['name' => 'Social', 'description' => 'Social gatherings and networking events'],
-            ['name' => 'Others', 'description' => 'Miscellaneous events']
+            ['name' => 'Tech', 'description' => 'Tech related events'],
         ];
 
         foreach ($categories as $category) {

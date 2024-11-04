@@ -42,39 +42,50 @@
                         <!-- Authentication Links -->
                         @guest
 
-                            @if (Route::has('login'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                                </li>
-                            @endif
+                        @if (Route::has('login'))
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                        </li>
+                        @endif
 
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
+                        @if (Route::has('register'))
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                        </li>
+                        @endif
                         @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
-                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
-                                </a>
+                        <li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                {{ Auth::user()->name }}
+                            </a>
 
-                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                          document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-                                    @if (Auth::check() && Auth::user()->role === 'a')
-                                        <a href="{{route("admin.users") }}" class="btn btn-link">
-                                            {{_('Admin Panel')}}
-                                        </a>
-                                    @endif
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
+                                    {{ __('Logout') }}
+                                </a>
+                                @if (Auth::check() && Auth::user()->role === 'a')
+                                <a href="{{route("admin.users") }}" class="btn btn-link">
+                                    {{_('Admin Panel')}}
+                                </a>
+                                @endif
+                                @if (Auth::check() && Auth::user()->role === 'o')
+                                <a href="{{route("organizer.events") }}" class="btn btn-link">
+                                    {{_('Eventos')}}
+                                </a>
+                                <!-- Submenú para filtrar eventos -->
+                                <div class="dropdown-divider"></div>
+                                <h6 class="dropdown-header">Filtrar por:</h6>
+                                <a class="dropdown-item" href="{{ route('events.filter', ['category' => 'musica']) }}">Música</a>
+                                <a class="dropdown-item" href="{{ route('events.filter', ['category' => 'deporte']) }}">Deporte</a>
+                                <a class="dropdown-item" href="{{ route('events.filter', ['category' => 'tecnologia']) }}">Tecnología</a>
+                                @endif
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    @csrf
+                                </form>
+                            </div>
+                        </li>
                         @endguest
                     </ul>
                 </div>
