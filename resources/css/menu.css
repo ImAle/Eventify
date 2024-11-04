@@ -1,15 +1,13 @@
-
 .dropdown-submenu {
-    position: relative;
-}
-
-.dropdown-submenu .dropdown-menu {
-    top: 0;
-    left: 100%; /* Mover el submenú a la derecha del menú padre */
-    margin-top: -6px; /* Alinear verticalmente con el padre */
+    position: absolute; /* Asegúrate de que el submenú se posicione absolutamente */
     display: none; /* Ocultar por defecto */
+    z-index: 1000; /* Asegúrate de que el submenú se muestre sobre otros elementos */
 }
 
-.dropdown-submenu:hover .dropdown-menu {
-    display: block; /* Mostrar el submenú al pasar el mouse */
+.dropdown:hover .dropdown-submenu {
+    display: block; /* Mostrar el submenú al pasar el mouse sobre el elemento padre */
+}
+
+.dropdown-menu {
+    position: relative; /* Asegúrate de que el menú principal tenga posición relativa */
 }

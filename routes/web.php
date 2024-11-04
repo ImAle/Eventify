@@ -40,7 +40,8 @@ Route::middleware(['admin'])->group(function () {
 Route::middleware(['organizer'])->group(function () {
     Route::get('/organizer/events', [EventsController::class, 'index'])->name('events.get');
     Route::get('/organizer/events/filter/{category}', [EventsController::class, 'filter'])->name('events.filter');
-    Route::post('/organizer/events', [EventsController::class, 'store'])->name('events.store');
+    Route::get('/organizer/events/create', function(){return view('events.event_create');})->name('events.create');
+    Route::post('/organizer/events/create', [EventsController::class, 'store'])->name('events.store');
     Route::put('/organizer/events/update', [EventsController::class, 'update'])->name('events.update');
     Route::delete('/organizer/events/{id}', [EventsController::class, 'destroy'])->name('events.delete');
 });

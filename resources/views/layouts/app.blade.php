@@ -15,7 +15,7 @@
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
     <!-- Scripts -->
-    @vite(['resources/sass/app.scss', 'resources/js/app.js', 'resources/css/menu.css'])
+    @vite(['resources/sass/app.scss', 'resources/js/app.js', 'resources/scss/menu.scss'])
 </head>
 
 <body>
@@ -62,30 +62,33 @@
 
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                         document.getElementById('logout-form').submit();">
+                                                             document.getElementById('logout-form').submit();">
                                     {{ __('Logout') }}
                                 </a>
                                 @if (Auth::check() && Auth::user()->role === 'a')
-                                <a href="{{route("admin.users") }}" class="btn btn-link">
-                                    {{_('Admin Panel')}}
+                                <a href="{{ route('admin.users') }}" class="btn btn-link">
+                                    {{ __('Admin Panel') }}
                                 </a>
                                 @endif
                                 @if (Auth::check() && Auth::user()->role === 'o')
-                                <a href="{{route("events.get") }}" class="btn btn-link">
-                                    {{_('Eventos')}}
+                                <a href="{{ route('events.get') }}" class="btn btn-link">
+                                    {{ __('Eventos') }}
                                 </a>
                                 <!-- Submenú para filtrar eventos -->
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="{{ route('events.filter', ['category' => 'musica']) }}">Música</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('events.filter', ['category' => 'deporte']) }}">Deporte</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('events.filter', ['category' => 'tecnologia']) }}">Tecnología</a></li>
-                                </ul>
+                                <div class="dropdown-submenu">
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="{{ route('events.filter', ['category' => 'musica']) }}">Música</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('events.filter', ['category' => 'deporte']) }}">Deporte</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('events.filter', ['category' => 'tecnologia']) }}">Tecnología</a></li>
+                                    </ul>
+                                </div>
                                 @endif
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                     @csrf
                                 </form>
                             </div>
                         </li>
+
                         @endguest
                     </ul>
                 </div>
