@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\EventsController;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -34,6 +35,10 @@ Route::middleware(['admin'])->group(function () {
     Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
     Route::get('/admin/user/{id}/edit', [UserController::class, 'edit'])->name('user.edit');
     Route::put('/admin/user/{id}', [UserController::class, 'update'])->name('user.update');
+});
+
+Route::middleware(['organizer'])->group(function () {
+    Route::get('', [EventsController::class, ''])->name('');
 });
 
 

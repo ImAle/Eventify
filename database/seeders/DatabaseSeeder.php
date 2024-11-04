@@ -5,6 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use \App\Models\User;
+use \App\Models\Category;
 
 class DatabaseSeeder extends Seeder
 {
@@ -31,5 +32,18 @@ class DatabaseSeeder extends Seeder
 
         // Crear otros usuarios si es necesario
         User::factory(10)->create();
+
+        // Crear categorías
+        $categories = [
+            ['name' => 'Music', 'description' => 'All kinds of music events'],
+            ['name' => 'Sports', 'description' => 'Sports related events'],
+            ['name' => 'Workshop', 'description' => 'Educational and training workshops'],
+            ['name' => 'Social', 'description' => 'Social gatherings and networking events'],
+            ['name' => 'Others', 'description' => 'Miscellaneous events']
+        ];
+
+        foreach ($categories as $category) {
+            Category::create($category);
+        }
     }
 }
