@@ -1,13 +1,22 @@
-.navbar .dropdown-submenu {
-    position: absolute;
-    display: none;
-    z-index: 1000;
+.dropdown-submenu {
+    position: absolute; /* Para posicionar el submenú relativo al menú */
+    background-color: white; /* Color de fondo del submenú */
+    border: 1px solid #ccc; /* Borde del submenú */
+    padding: 0; /* Sin padding extra */
+    margin: 0; /* Sin margin extra */
+    z-index: 1000; /* Asegura que esté por encima */
 }
 
-.navbar .dropdown:hover .dropdown-submenu {
-    display: block;
+.dropdown-menu {
+    display: none; /* Oculta el menú por defecto */
 }
 
-.navbar .dropdown-menu {
-    position: relative;
+.dropdown-item {
+    padding: 8px 16px; /* Espaciado para los elementos del menú */
+    text-decoration: none; /* Sin subrayado */
+    color: #333; /* Color del texto */
+}
+
+.dropdown-item:hover {
+    background-color: #f0f0f0; /* Color de fondo al pasar el ratón */
 }
