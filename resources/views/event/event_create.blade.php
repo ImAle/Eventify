@@ -54,7 +54,7 @@
                 <!-- Botón de Crear Evento -->
                 <div class="text-center mt-4">
                     <button type="submit" class="btn btn-primary">Crear Evento</button>
-                    <a href="{{ route('events.store') }}" class="btn btn-secondary">Cancelar</a>
+                    <a href="{{route('events.get')}}" class="btn btn-secondary">Cancelar</a>
                 </div>
             </form>
         </div>
