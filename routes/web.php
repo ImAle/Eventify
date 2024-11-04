@@ -38,7 +38,7 @@ Route::middleware(['admin'])->group(function () {
 });
 
 Route::middleware(['organizer'])->group(function () {
-    Route::get('', [EventsController::class, ''])->name('');
+    //Route::get('', [EventsController::class, ''])->name('');
 });
 
 
