@@ -15,7 +15,7 @@
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
     <!-- Scripts -->
-    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    @vite(['resources/sass/app.scss', 'resources/js/app.js', 'resources/css/menu.css'])
 </head>
 
 <body>
@@ -71,15 +71,15 @@
                                 </a>
                                 @endif
                                 @if (Auth::check() && Auth::user()->role === 'o')
-                                <a href="{{route("organizer.events") }}" class="btn btn-link">
+                                <a href="{{route("events.get") }}" class="btn btn-link">
                                     {{_('Eventos')}}
                                 </a>
                                 <!-- Submenú para filtrar eventos -->
-                                <div class="dropdown-divider"></div>
-                                <h6 class="dropdown-header">Filtrar por:</h6>
-                                <a class="dropdown-item" href="{{ route('events.filter', ['category' => 'musica']) }}">Música</a>
-                                <a class="dropdown-item" href="{{ route('events.filter', ['category' => 'deporte']) }}">Deporte</a>
-                                <a class="dropdown-item" href="{{ route('events.filter', ['category' => 'tecnologia']) }}">Tecnología</a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="{{ route('events.filter', ['category' => 'musica']) }}">Música</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('events.filter', ['category' => 'deporte']) }}">Deporte</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('events.filter', ['category' => 'tecnologia']) }}">Tecnología</a></li>
+                                </ul>
                                 @endif
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                     @csrf
