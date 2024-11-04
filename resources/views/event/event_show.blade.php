@@ -1,31 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eventify - Eventos creados</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.3/dist/tailwind.min.css">
-</head>
-<body class="bg-gray-100">
-    <header class="bg-white shadow-md py-4">
-        <div class="container mx-auto flex justify-between items-center px-6">
-            <a href="/" class="text-2xl font-bold text-gray-700">Eventify</a>
-            <nav>
-                @if (Route::has('login'))
-                    <div class="flex space-x-4">
-                        @auth
-                            <a href="{{ url('/home') }}" class="text-gray-600 hover:text-gray-900">Home</a>
-                        @else
-                            <a href="{{ route('login') }}" class="text-gray-600 hover:text-gray-900">Log in</a>
-                        @endauth
+@extends('layouts.app')
+
+@section('title', 'Mis Eventos')
+
+@section('content')
+<div class="container mt-5">
+    <h1 class="text-center">Eventos Organizados por {{ Auth::user()->name }}</h1>
+    
+    @if ($events->isEmpty())
+        <p class="text-muted text-center">No tienes eventos organizados en este momento.</p>
+    @else
+        <div class="row mt-4">
+            @foreach ($events as $event)
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-sm">
+                        <!-- Imagen del Evento -->
+                        <img src="{{ $event->image ?? asset('images/default-event.jpg') }}" class="card-img-top" alt="{{ $event->title }}">
+                        
+                        <div class="card-body">
+                            <!-- Título del Evento -->
+                            <h5 class="card-title">{{ $event->title }}</h5>
+                            
+                            <p class="card-text text-muted mb-1">
+                            <strong>Fecha:</strong> {{ \Carbon\Carbon::parse($event->start_time)->format('d/m/Y') }}
+                            </p>
+
+                        </div>
                     </div>
-                @endif
-            </nav>
+                </div>
+            @endforeach
         </div>
-    </header>
-    <main class="container mx-auto mt-10 text-center">
-        <h1 class="text-4xl font-semibold text-gray-700">Bienvenido a Eventify</h1>
-        <p class="mt-4 text-gray-600">La solución profesional para la gestión de tus eventos.</p>
-    </main>
-</body>
-</html>
+        
+    @endif
+    
+    <!-- Botón de Crear Nuevo Evento -->
+    <div class="text-center mt-4">
+        <a href="{{ route('events.store') }}" class="btn btn-success">Crear Nuevo Evento</a>
+    </div>
+</div>
+@endsection
+
