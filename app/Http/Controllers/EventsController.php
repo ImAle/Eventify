@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Events;
+use App\Models\Category;
 
 class EventsController extends Controller
 {
@@ -13,7 +14,7 @@ class EventsController extends Controller
     {
         $organizerId = Auth::id(); // Obtener el ID del organizador autenticado
         $events = Events::where('organizer_id', $organizerId)
-            ->where('deleted','!=', 1)
+            ->where('deleted', '!=', 1)
             ->get();
 
         return view('event.event_show', compact('events'));
@@ -45,13 +46,26 @@ class EventsController extends Controller
         return redirect()->back()->with('message', 'Evento marcado como eliminado.');
     }
 
-    public function filter($category)
+    public function filter($categoryName)
     {
-        // Lógica para filtrar eventos según la categoría
-        $events = Events::where('category_id', $category)->get();
+        // Buscar la categoría por su nombre
+        $category = Category::where('name', $categoryName)->first();
+
+        // Verificar si se encontró la categoría
+        if (!$category) {
+            // Manejar el caso en que no se encuentra la categoría (opcional)
+            return redirect()->back()->with('error', 'Categoría no encontrada.');
+        }
+
+        // Obtener el ID de la categoría
+        $categoryId = $category->id;
+
+        // Filtrar eventos según el ID de la categoría
+        $events = Events::where('category_id', $categoryId)->get();
 
         return view('event.event_show', compact('events'));
     }
+
 
 
     protected function create(array $data)
@@ -65,18 +79,18 @@ class EventsController extends Controller
 
         return Events::create([
             'organizer_id' => $data['organizer_id'],
-            'title' => $data['title'],              
-            'description' => $data['description'],   
-            'category_id' => $data['category_id'],   
-            'start_time' => $data['start_time'],     
-            'end_time' => $data['end_time'],         
-            'location' => $data['location'],        
-            'latitude' => $data['latitude'],        
-            'longitude' => $data['longitude'],      
-            'max_attendees' => $data['max_attendees'], 
-            'price' => $data['price'],               
-            'image_url' => $urlImagePath,            
-            'deleted' => 0,                          
+            'title' => $data['title'],
+            'description' => $data['description'],
+            'category_id' => $data['category_id'],
+            'start_time' => $data['start_time'],
+            'end_time' => $data['end_time'],
+            'location' => $data['location'],
+            'latitude' => $data['latitude'],
+            'longitude' => $data['longitude'],
+            'max_attendees' => $data['max_attendees'],
+            'price' => $data['price'],
+            'image_url' => $urlImagePath,
+            'deleted' => 0,
         ]);
     }
 

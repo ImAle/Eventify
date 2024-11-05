@@ -72,14 +72,14 @@
                                 @endif
                                 @if (Auth::check() && Auth::user()->role === 'o')
                                 <div class="dropdown-submenu">
-                                    <a class="dropdown-item dropdown-toggle" href="#" id="bot" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <a class="dropdown-item dropdown-toggle" href="{{ route('events.get')}}" id="bot" aria-expanded="false">
                                         {{ __('Eventos') }}
                                     </a>
                                     <!-- Submenú para filtrar eventos -->
                                     <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="{{ route('events.filter', ['category' => 'musica']) }}">Música</a></li>
-                                        <li><a class="dropdown-item" href="{{ route('events.filter', ['category' => 'deporte']) }}">Deporte</a></li>
-                                        <li><a class="dropdown-item" href="{{ route('events.filter', ['category' => 'tecnologia']) }}">Tecnología</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('events.filter', ['category' => 'music']) }}">Música</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('events.filter', ['category' => 'sports']) }}">Deporte</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('events.filter', ['category' => 'tech']) }}">Tecnología</a></li>
                                     </ul>
                                 </div>
                                 @endif
