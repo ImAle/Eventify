@@ -84,7 +84,7 @@ class EventsController extends Controller
         }
 
         return Events::create([
-            'organizer_id' => $data['organizer_id'],
+            'organizer_id' => Auth::id(),
             'title' => $data['title'],
             'description' => $data['description'],
             'category_id' => $data['category_id'],
@@ -121,6 +121,6 @@ class EventsController extends Controller
         $event = $this->create($request->all());
 
         // Redireccionar o devolver una respuesta
-        return redirect()->route('events.index')->with('success', 'Evento creado exitosamente.');
+        return redirect()->route('events.get')->with('success', 'Evento creado exitosamente.');
     }
 }

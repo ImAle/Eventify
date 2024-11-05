@@ -19,7 +19,7 @@
                 <div class="col-md-4 mb-4">
                     <div class="card shadow-sm">
                         <!-- Imagen del Evento -->
-                        <img src="{{ $event->image ?? asset('images/default-event.jpg') }}" class="card-img-top" alt="{{ $event->title }}">
+                        <img src="{{ $event->image ?? asset('images/default-event.jpg') }}" class="card-img-top" alt="{{ $event->image_url }}">
                         
                         <div class="card-body">
                             <!-- Título del Evento -->
@@ -33,8 +33,8 @@
                     
                     <!-- Botones de Editar y Borrar fuera de la tarjeta -->
                     <div class="d-flex justify-content-end mt-2">
-                        <!-- Botón de Editar -->
-                        <a href="{{ route('events.update') }}" class="btn btn-primary btn-sm me-2">Actualizar</a>
+                        <!-- Botón de actualizar -->
+                        <a href="{{ route('events.update', $event->id) }}" class="btn btn-primary btn-sm me-2">Actualizar</a>
                         <!-- Botón de Borrar -->
                         <form action="{{ route('events.delete', $event) }}" method="POST" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este evento?');">
                             @csrf
