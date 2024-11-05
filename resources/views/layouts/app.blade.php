@@ -71,11 +71,11 @@
                                 </a>
                                 @endif
                                 @if (Auth::check() && Auth::user()->role === 'o')
-                                <a href="{{ route('events.get') }}" class="btn btn-link">
-                                    {{ __('Eventos') }}
-                                </a>
-                                <!-- Submenú para filtrar eventos -->
                                 <div class="dropdown-submenu">
+                                    <a class="dropdown-item dropdown-toggle" href="#" id="bot" data-bs-toggle="dropdown" aria-expanded="false">
+                                        {{ __('Eventos') }}
+                                    </a>
+                                    <!-- Submenú para filtrar eventos -->
                                     <ul class="dropdown-menu">
                                         <li><a class="dropdown-item" href="{{ route('events.filter', ['category' => 'musica']) }}">Música</a></li>
                                         <li><a class="dropdown-item" href="{{ route('events.filter', ['category' => 'deporte']) }}">Deporte</a></li>

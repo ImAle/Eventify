@@ -1,22 +1,12 @@
-.dropdown-submenu {
-    position: absolute; /* Para posicionar el submenú relativo al menú */
-    background-color: white; /* Color de fondo del submenú */
-    border: 1px solid #ccc; /* Borde del submenú */
-    padding: 0; /* Sin padding extra */
-    margin: 0; /* Sin margin extra */
-    z-index: 1000; /* Asegura que esté por encima */
+/* Estilo para el submenú */
+.dropdown-submenu .dropdown-menu {
+    top: 0; /* Mantener el mismo nivel vertical */
+    left: -100%; /* Mostrar el submenú a la izquierda del menú padre */
+    margin-top: -1px; /* Ajuste para evitar un pequeño espacio */
+    display: none; /* Oculto por defecto */
+    position: absolute; /* Asegura que se posicione correctamente */
 }
 
-.dropdown-menu {
-    display: none; /* Oculta el menú por defecto */
-}
-
-.dropdown-item {
-    padding: 8px 16px; /* Espaciado para los elementos del menú */
-    text-decoration: none; /* Sin subrayado */
-    color: #333; /* Color del texto */
-}
-
-.dropdown-item:hover {
-    background-color: #f0f0f0; /* Color de fondo al pasar el ratón */
+.dropdown-submenu:hover > .dropdown-menu {
+    display: block; /* Muestra el submenú al pasar el ratón */
 }
