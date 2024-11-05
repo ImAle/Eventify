@@ -61,12 +61,18 @@ class EventsController extends Controller
         $categoryId = $category->id;
 
         // Filtrar eventos según el ID de la categoría
-        $events = Events::where('category_id', $categoryId)->get();
+        $events = Events::where('category_id', $categoryId)->
+        where('deleted', '!=', 1)
+        ->get();
 
         return view('event.event_show', compact('events'));
     }
 
-
+    public function createView()
+    {
+        $categories = Category::all();
+        return view('event.event_create', compact('categories'));
+    }
 
     protected function create(array $data)
     {

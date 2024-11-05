@@ -22,14 +22,25 @@
             <!-- Formulario de Creación de Evento -->
             <form action="{{ route('events.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
-
+                <div>                
+                    <label for="category_id">Categoría del Evento</label>
+                    <select class="form-control" id="category_id" name="category_id" required>
+                        <option value="" disabled selected>Selecciona una categoría</option>
+                        @foreach($categories as $category)
+                            <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
+                                {{ $category->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <br>
                 <!-- Título del Evento -->
                 <div class="form-group mb-3">
                     <label for="title">Título del Evento</label>
                     <input type="text" class="form-control" id="title" name="title" placeholder="Ingresa el título del evento" value="{{ old('title') }}" required>
                 </div>
 
-                <!-- Fecha y Hora de Inicio -->
+                <!-- Fecha y Hora -->
                 <div class="form-group mb-3">
                     <label for="start_time">Fecha y Hora de Inicio</label>
                     <input type="datetime-local" class="form-control" id="start_time" name="start_time" value="{{ old('start_time') }}" required>
@@ -41,7 +52,7 @@
 
                 <!-- Imagen del Evento -->
                 <div class="form-group mb-3">
-                    <label for="image">Imagen del Evento</label>
+                    <label for="image">Imagen del Evento</label><br>
                     <input type="file" class="form-control-file" id="image" name="image">
                 </div>
 
