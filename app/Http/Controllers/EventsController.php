@@ -96,7 +96,8 @@ class EventsController extends Controller
 
         // Filtrar eventos según el ID de la categoría
         $events = Events::where('category_id', $categoryId)->
-        where('deleted', '!=', 1)
+        where('deleted', '!=', 1)->
+        where('organizer_id', Auth::user()->id)
         ->get();
 
         return view('event.event_show', compact('events'));
