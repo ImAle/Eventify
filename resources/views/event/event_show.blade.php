@@ -20,7 +20,7 @@
 
         <div class="row mt-4">
             @foreach ($events as $event)
-                <div class="col-md-4 mb-4">
+                <div class="d-flex col-md-4 mb-4 gap-2">
                     <div class="card shadow-sm">
                         <!-- Imagen del Evento --> 
                         <img src="{{ asset('storage/'.$event->image_url) }}" alt="Imagen del evento" class="img-fluid">
@@ -37,7 +37,7 @@
                     </div>
                     
                     <!-- Botones de Editar y Borrar fuera de la tarjeta -->
-                    <div class="d-flex justify-content-end mt-2">
+                    <div class="d-flex flex-column justify-content-center mt-2 gap-2">
                         <!-- Botón de actualizar -->
                         <a href="{{ route('events.updateform', $event->id) }}" class="btn btn-primary btn-sm me-2">Actualizar</a>
                         <!-- Botón de Borrar -->
