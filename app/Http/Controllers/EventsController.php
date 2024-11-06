@@ -26,15 +26,36 @@ class EventsController extends Controller
 
         // Validar los datos entrantes
         $request->validate([
-            'nombre' => 'required|string|max:255',
-            'fecha' => 'required|date',
-            'descripcion' => 'nullable|string',
+            'category_id' => 'required|exists:categories,id',
+            'title' => 'required|string|max:255',
+            'start_time' => 'required|date',
+            'end_time' => 'required|date|after_or_equal:start_time',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validación de imagen opcional
+            'description' => 'nullable|string',
+            'price' => 'required|numeric|min:0',
+            'location' => 'required|string|max:255',
+            'latitude' => 'required|numeric|between:-90,90',
+            'longitude' => 'required|numeric|between:-180,180',
+            'max_attendees' => 'required|integer|min:1',
         ]);
+    
+        // Actualizar el evento con los datos válidos
+        $data = $request->except('image');
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('event_images', 'public');
+            $data['image'] = $imagePath;
+        }
 
         // Actualizar el evento
         $event->update($request->all());
 
-        return redirect()->route('events.update', $id)->with('success', 'Evento actualizado con éxito.');
+        return redirect()->route('events.get', $id)->with('success', 'Evento actualizado con éxito.');
+    }
+
+    public function updateForm($id){
+        $event = Events::findOrFail($id);
+        $categories = Category::all();
+        return view('event.event_update', compact('event', 'categories'));
     }
 
     public function destroy(Events $event)

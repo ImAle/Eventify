@@ -24,12 +24,13 @@
                 @csrf
                 @method('PUT')
                 
+                <!-- Categoría del Evento -->
                 <div>
                     <label for="category_id">Categoría del Evento</label>
                     <select class="form-control" id="category_id" name="category_id" required>
-                        <option value="" disabled>Selecciona una categoría</option>
+                        <option value="" disabled {{ old('category_id', $event->category_id) ? '' : 'selected' }}>Selecciona una categoría</option>
                         @foreach($categories as $category)
-                            <option value="{{ $category->id }}" {{ $event->category_id == $category->id ? 'selected' : '' }}>
+                            <option value="{{ $category->id }}" {{ old('category_id', $event->category_id) == $category->id ? 'selected' : '' }}>
                                 {{ $category->name }}
                             </option>
                         @endforeach
@@ -74,31 +75,31 @@
                     <input type="number" class="form-control" id="price" name="price" placeholder="Ingresa el precio del evento" value="{{ old('price', $event->price) }}" min="0" step="0.01" required>
                 </div>
 
-                <!-- Campo para la ubicación -->
+                <!-- Ubicación -->
                 <div class="form-group mb-3">
                     <label for="location">Ubicación</label>
                     <input type="text" class="form-control" id="location" name="location" required value="{{ old('location', $event->location) }}">
                 </div>
 
-                <!-- Campo para la latitud -->
+                <!-- Latitud -->
                 <div class="form-group mb-3">
                     <label for="latitude">Latitud</label>
                     <input type="text" class="form-control" id="latitude" name="latitude" required value="{{ old('latitude', $event->latitude) }}">
                 </div>
 
-                <!-- Campo para la longitud -->
+                <!-- Longitud -->
                 <div class="form-group mb-3">
                     <label for="longitude">Longitud</label>
                     <input type="text" class="form-control" id="longitude" name="longitude" required value="{{ old('longitude', $event->longitude) }}">
                 </div>
 
-                <!-- Campo para el número asistentes -->
+                <!-- Máximo de Asistentes -->
                 <div class="form-group mb-3">
                     <label for="max_attendees">Máximo de Asistentes</label>
                     <input type="number" class="form-control" id="max_attendees" name="max_attendees" required value="{{ old('max_attendees', $event->max_attendees) }}">
                 </div>
 
-                <!-- Botón de Actualizar Evento -->
+                <!-- Botones -->
                 <div class="text-center mt-4">
                     <button type="submit" class="btn btn-primary">Actualizar Evento</button>
                     <a href="{{ route('events.get') }}" class="btn btn-secondary">Cancelar</a>

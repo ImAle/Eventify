@@ -5,7 +5,11 @@
 @section('content')
 <div class="container mt-5">
     <h1 class="text-center">Eventos creados por {{ Auth::user()->name }}</h1>
-    
+    @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
     @if ($events->isEmpty())
         <p class="text-muted text-center">No hay eventos organizados en este momento.</p>
     @else
@@ -34,7 +38,7 @@
                     <!-- Botones de Editar y Borrar fuera de la tarjeta -->
                     <div class="d-flex justify-content-end mt-2">
                         <!-- Botón de actualizar -->
-                        <a href="{{ route('events.update', $event->id) }}" class="btn btn-primary btn-sm me-2">Actualizar</a>
+                        <a href="{{ route('events.updateform', $event->id) }}" class="btn btn-primary btn-sm me-2">Actualizar</a>
                         <!-- Botón de Borrar -->
                         <form action="{{ route('events.delete', $event) }}" method="POST" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este evento?');">
                             @csrf
