@@ -22,9 +22,10 @@
             @foreach ($events as $event)
                 <div class="col-md-4 mb-4">
                     <div class="card shadow-sm">
-                        <!-- Imagen del Evento -->
-                        <img src="{{ $event->image ?? asset('images/default-event.jpg') }}" class="card-img-top" alt="{{ $event->image_url }}">
-                        
+                        <!-- Imagen del Evento --> 
+                        <img src="{{ asset('storage/'.$event->image_url) }}" alt="Imagen del evento" class="img-fluid">
+
+
                         <div class="card-body">
                             <!-- Título del Evento -->
                             <h5 class="card-title">{{ $event->title }}</h5>

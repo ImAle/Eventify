@@ -30,7 +30,7 @@ class EventsController extends Controller
             'title' => 'required|string|max:255',
             'start_time' => 'required|date',
             'end_time' => 'required|date|after_or_equal:start_time',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validación de imagen opcional
+            'image_url' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validación de imagen opcional
             'description' => 'nullable|string',
             'price' => 'required|numeric|min:0',
             'location' => 'required|string|max:255',
@@ -39,15 +39,28 @@ class EventsController extends Controller
             'max_attendees' => 'required|integer|min:1',
         ]);
     
+        $event->organizer_id = Auth::id();
+        $event->title = $request->title;
+        $event->description = $request->description;
+        $event->category_id = $request->category_id;
+        $event->start_time = $request->start_time;
+        $event->end_time = $request->end_time;
+        $event->location = $request->location;
+        $event->latitude = $request->latitude;
+        $event->longitude = $request->longitude;
+        $event->max_attendees = $request->max_attendees;
+        $event->price = $request->price;
+        $event->deleted = 0;
+
         // Actualizar el evento con los datos válidos
-        $data = $request->except('image');
-        if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('event_images', 'public');
-            $data['image'] = $imagePath;
+        $data = $request->except('image_url');
+        if ($request->hasFile('image_url')) {
+            $imagePath = $request->file('image_url')->store('storage/event_images', 'public');
+            $event->image_url = $imagePath;
         }
 
         // Actualizar el evento
-        $event->update($request->all());
+        $event->save();
 
         return redirect()->route('events.get', $id)->with('success', 'Evento actualizado con éxito.');
     }
@@ -138,10 +151,32 @@ class EventsController extends Controller
             'image_url' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        // Crear el evento utilizando el método create
-        $event = $this->create($request->all());
-
-        // Redireccionar o devolver una respuesta
+        $event = new Events();
+        $event->organizer_id = Auth::id();
+        $event->title = $request->title;
+        $event->description = $request->description;
+        $event->category_id = $request->category_id;
+        $event->start_time = $request->start_time;
+        $event->end_time = $request->end_time;
+        $event->location = $request->location;
+        $event->latitude = $request->latitude;
+        $event->longitude = $request->longitude;
+        $event->max_attendees = $request->max_attendees;
+        $event->price = $request->price;
+        $event->deleted = 0;
+        
+        if ($request->hasFile('image_url')) {
+            // Almacena la imagen en la carpeta "public/event_images" y guarda la ruta
+            $imagePath = $request->file('image_url')->store('storage/event_images', 'public');
+            $event->image_url = $imagePath;
+        }
+    
+        // Guardar el evento en la base de datos
+        $event->save();
+    
+        // Redireccionar con mensaje de éxito
         return redirect()->route('events.get')->with('success', 'Evento creado exitosamente.');
+
+        
     }
 }

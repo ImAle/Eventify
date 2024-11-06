@@ -59,7 +59,7 @@
                 <!-- Imagen del Evento -->
                 <div class="form-group mb-3">
                     <label for="image">Imagen del Evento</label><br>
-                    <input type="file" class="form-control-file" id="image" name="image">
+                    <input type="file" class="form-control-file" id="image" name="image_url"><br>
                     <small class="form-text text-muted">Deja este campo vacío si no deseas cambiar la imagen.</small>
                 </div>
 
