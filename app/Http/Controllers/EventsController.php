@@ -53,7 +53,6 @@ class EventsController extends Controller
         $event->deleted = 0;
 
         // Actualizar el evento con los datos válidos
-        $data = $request->except('image_url');
         if ($request->hasFile('image_url')) {
             $imagePath = $request->file('image_url')->store('storage/event_images', 'public');
             $event->image_url = $imagePath;
@@ -169,6 +168,10 @@ class EventsController extends Controller
         if ($request->hasFile('image_url')) {
             // Almacena la imagen en la carpeta "public/event_images" y guarda la ruta
             $imagePath = $request->file('image_url')->store('storage/event_images', 'public');
+            $event->image_url = $imagePath;
+        }else{
+            // Da imagen por defecto
+            $imagePath = 'event_images/image_not_found.jpg';
             $event->image_url = $imagePath;
         }
     

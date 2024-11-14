@@ -67,7 +67,7 @@ class DatabaseSeeder extends Seeder
                 'longitude' => '-99.1332',
                 'max_attendees' => rand(50, 200),
                 'price' => rand(10, 100) * 100, // Precio aleatorio entre $100 y $10,000
-                'image_url' => null, // URL de imagen de ejemplo
+                'image_url' => 'event_images/image_not_found.jpg', // URL de imagen de ejemplo
                 'deleted' => false, // No eliminado
                 'created_at' => now(),
                 'updated_at' => now(),
