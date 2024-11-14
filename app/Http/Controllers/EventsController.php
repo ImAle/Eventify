@@ -30,7 +30,7 @@ class EventsController extends Controller
             'title' => 'required|string|max:255',
             'start_time' => 'required|date',
             'end_time' => 'required|date|after_or_equal:start_time',
-            'image_url' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validación de imagen opcional
+            'image_url' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'description' => 'nullable|string',
             'price' => 'required|numeric|min:0',
             'location' => 'required|string|max:255',
@@ -38,7 +38,7 @@ class EventsController extends Controller
             'longitude' => 'required|numeric|between:-180,180',
             'max_attendees' => 'required|integer|min:1',
         ]);
-    
+
         $event->organizer_id = Auth::id();
         $event->title = $request->title;
         $event->description = $request->description;
@@ -64,7 +64,8 @@ class EventsController extends Controller
         return redirect()->route('events.get', $id)->with('success', 'Evento actualizado con éxito.');
     }
 
-    public function updateForm($id){
+    public function updateForm($id)
+    {
         $event = Events::findOrFail($id);
         $categories = Category::all();
         return view('event.event_update', compact('event', 'categories'));
@@ -94,10 +95,8 @@ class EventsController extends Controller
         $categoryId = $category->id;
 
         // Filtrar eventos según el ID de la categoría
-        $events = Events::where('category_id', $categoryId)->
-        where('deleted', '!=', 1)->
-        where('organizer_id', Auth::user()->id)
-        ->get();
+        $events = Events::where('category_id', $categoryId)->where('deleted', '!=', 1)->where('organizer_id', Auth::user()->id)
+            ->get();
 
         return view('event.event_show', compact('events'));
     }
@@ -138,17 +137,17 @@ class EventsController extends Controller
     {
         // Validación de los datos del evento
         $request->validate([
-            'title' => 'required|string|max:150',
-            'description' => 'nullable|string',
             'category_id' => 'required|exists:categories,id',
+            'title' => 'required|string|max:255',
             'start_time' => 'required|date',
-            'end_time' => 'required|date|after:start_time',
-            'location' => 'nullable|string|max:255',
-            'latitude' => 'nullable|numeric',
-            'longitude' => 'nullable|numeric',
-            'max_attendees' => 'nullable|integer',
-            'price' => 'required|numeric|min:0',
+            'end_time' => 'required|date|after_or_equal:start_time',
             'image_url' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'description' => 'nullable|string',
+            'price' => 'required|numeric|min:0',
+            'location' => 'required|string|max:255',
+            'latitude' => 'required|numeric|between:-90,90',
+            'longitude' => 'required|numeric|between:-180,180',
+            'max_attendees' => 'required|integer|min:1',
         ]);
 
         $event = new Events();
@@ -164,23 +163,21 @@ class EventsController extends Controller
         $event->max_attendees = $request->max_attendees;
         $event->price = $request->price;
         $event->deleted = 0;
-        
+
         if ($request->hasFile('image_url')) {
             // Almacena la imagen en la carpeta "public/event_images" y guarda la ruta
             $imagePath = $request->file('image_url')->store('storage/event_images', 'public');
             $event->image_url = $imagePath;
-        }else{
+        } else {
             // Da imagen por defecto
             $imagePath = 'event_images/image_not_found.jpg';
             $event->image_url = $imagePath;
         }
-    
+
         // Guardar el evento en la base de datos
         $event->save();
-    
+
         // Redireccionar con mensaje de éxito
         return redirect()->route('events.get')->with('success', 'Evento creado exitosamente.');
-
-        
     }
 }
