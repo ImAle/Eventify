@@ -17,13 +17,13 @@
     </div>
 
     <!-- Contenedor centrado solo para el mensaje y los eventos -->
-    <div class="container mt-5 d-flex justify-content-center align-items-center" style="min-height: 18rem;">
+    <div class="container mt-5 d-flex justify-content-center align-items-center" style="min-height: 50vh;">
         @if ($events->isEmpty())
             <p class="text-muted text-center">No hay eventos organizados en este momento.</p>
         @else
             <div class="row mt-4">
                 @foreach ($events as $event)
-                    <div class="d-flex col-lg-4 col-mb-8 mb-4 gap-2">
+                    <div class="d-flex col-md-4 mb-4 gap-2">
                         <div class="card shadow-sm">
                             <!-- Imagen del Evento -->
                             <img src="{{ asset('storage/'.$event->image_url) }}" alt="Imagen del evento" class="img-fluid">
