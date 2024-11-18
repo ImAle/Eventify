@@ -54,6 +54,7 @@ class DatabaseSeeder extends Seeder
             // Crear la categoría y obtener el objeto creado
             $category = Category::create($categoryData);
 
+            for ($i = 0; $i < 5; $i++) {
             // Crear un evento para cada categoría creada
             Events::create([
                 'organizer_id' => $organizer->id,
@@ -72,6 +73,7 @@ class DatabaseSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
+        }
 
         }
 
