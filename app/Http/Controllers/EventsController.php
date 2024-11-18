@@ -20,30 +20,64 @@ class EventsController extends Controller
         return view('event.event_show', compact('events'));
     }
 
-    public function indexUser($registered)
-{
-    $user = Auth::user();
+    public function registerToEvent($id)
+    {
+        $event = Events::findOrFail($id); // Buscar el evento por su ID
+        $user = Auth::user(); // Usuario autenticado
 
-    $events = Events::with('organizer')
-        ->where('deleted', '!=', 1)
-        ->whereDate('start_time', '>', now());
+        // Verificar si el usuario ya está registrado en el evento
+        if ($event->users()->where('user_id', $user->id)->exists()) {
+            return back()->with('error', 'Ya estas registrado en el evento.');
+        }
 
-    if ($registered) {
-        // Mostrar solo donde el usuario está registrado
-        $events->whereHas('users', function ($query) use ($user) {
-            $query->where('user_id', $user->id);
-        });
-    } else {
-        // Mostrar solo donde el usuario NO está registrado
-        $events->whereDoesntHave('users', function ($query) use ($user) {
-            $query->where('user_id', $user->id);
-        });
+        // Registrar al usuario en el evento
+        $event->users()->attach($user->id, ['registered_at' => now()]);
+
+        // Responder con éxito
+        return back()->with('success', 'Te has registrado en el evento.');
     }
 
-    $events = $events->get();
+    public function deleteFromEvent($id)
+    {
+        $event = Events::findOrFail($id); // Buscar el evento por su ID
+        $user = Auth::user(); // Usuario autenticado
 
-    return view('event.event_show', compact('events'));
-}
+        // Verificar si el usuario está registrado en el evento
+        if (!$event->users()->where('user_id', $user->id)->exists()) {
+            return back()->with('error', 'No estás registrado en este evento.');
+        }
+
+        // Desregistrar al usuario del evento
+        $event->users()->detach($user->id);
+
+        // Redirigir a la misma página con un mensaje de éxito
+        return back()->with('success', 'Te has borrado del evento exitosamente.');
+    }
+
+    public function indexUser($registered)
+    {
+        $user = Auth::user();
+        $events = Events::with('organizer')
+            ->where('deleted', '!=', 1)
+            ->whereDate('start_time', '>', now());
+
+        if ($registered) {
+            // Mostrar solo los eventos donde el usuario está registrado
+            $events->whereHas('users', function ($query) use ($user) {
+                $query->where('user_id', $user->id);
+            });
+        } else {
+            // Mostrar solo los eventos donde el usuario NO está registrado
+            $events->whereDoesntHave('users', function ($query) use ($user) {
+                $query->where('user_id', $user->id);
+            });
+        }
+
+        $events = $events->get();
+
+        return view('event.event_show', compact('events'));
+    }
+
 
 
     public function update(Request $request, $id)

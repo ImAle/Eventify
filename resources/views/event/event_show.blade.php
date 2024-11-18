@@ -40,6 +40,23 @@
                                 </p>
                             </div>
                         </div>
+
+                        @if (Auth::check() && Auth::user()->role === 'u')
+                                    @if ($event->users()->where('user_id', Auth::id())->exists())
+                                        <!-- Botón para borrarse del evento -->
+                                        <form action="{{ route('events.deleteFromEvent', $event->id) }}" method="POST" class="mt-2">
+                                            @csrf
+                                            <button type="submit" class="btn btn-danger btn-sm">Borrarse</button>
+                                        </form>
+                                    @else
+                                        <!-- Botón para registrarse en el evento-->
+                                        <form action="{{ route('events.register', $event->id) }}" method="POST" class="mt-2">
+                                            @csrf
+                                            <button type="submit" class="btn btn-primary btn-sm">Registrarse</button>
+                                        </form>
+                                    @endif
+                                @endif
+
                         <!-- Botones de Editar y Borrar fuera de la tarjeta -->
                         @if (Auth::check() && Auth::user()->role === 'o')
                         <div class="d-flex flex-column justify-content-center mt-2 gap-2">
