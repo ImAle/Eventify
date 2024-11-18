@@ -42,7 +42,10 @@ class EventsController extends Controller
 
     $events = $events->get();
 
-    return view('event.event_show', compact('events'));
+    return view('event.event_show', [
+        'events' => $events,
+        'registered' => $registered
+    ]);
 }
 
 

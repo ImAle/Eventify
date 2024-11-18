@@ -35,7 +35,7 @@ class Events extends Model
 
     public function users()
     {
-        return $this->belongsToMany(User::class, 'event_attendees', 'event_id', 'user_id');
+        return $this->belongsToMany(User::class, 'event_attendees', 'event_id', 'user_id')->withPivot('registered_at');
     }
 
     // Relación con el modelo Category
