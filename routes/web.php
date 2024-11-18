@@ -24,8 +24,10 @@ Auth::routes(['verify' => true]);
 
 Route::get('/not-active', function(){return view('auth.not-active');})->name('not-active');
 
-Route::middleware(['verified', 'active'])->group(function () {
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware(['auth']);
+Route::middleware(['verified', 'active', 'auth'])->group(function () {
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('/user/events/registered', function(){return app()->make(EventsController::class)->indexUser(true);})->name('registeredEvents');
+    Route::get('/user/events/unregistered', function(){return app()->make(EventsController::class)->indexUser(false);})->name('unregisteredEvents');
 });
 
 Route::middleware(['admin'])->group(function () {

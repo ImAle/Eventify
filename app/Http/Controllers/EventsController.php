@@ -20,6 +20,32 @@ class EventsController extends Controller
         return view('event.event_show', compact('events'));
     }
 
+    public function indexUser($registered)
+{
+    $user = Auth::user();
+
+    $events = Events::with('organizer')
+        ->where('deleted', '!=', 1)
+        ->whereDate('start_time', '>', now());
+
+    if ($registered) {
+        // Mostrar solo donde el usuario está registrado
+        $events->whereHas('users', function ($query) use ($user) {
+            $query->where('user_id', $user->id);
+        });
+    } else {
+        // Mostrar solo donde el usuario NO está registrado
+        $events->whereDoesntHave('users', function ($query) use ($user) {
+            $query->where('user_id', $user->id);
+        });
+    }
+
+    $events = $events->get();
+
+    return view('event.event_show', compact('events'));
+}
+
+
     public function update(Request $request, $id)
     {
         $event = Events::findOrFail($id);

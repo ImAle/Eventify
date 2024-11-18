@@ -33,6 +33,11 @@ class Events extends Model
         return $this->belongsTo(User::class, 'organizer_id');
     }
 
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'event_attendees', 'event_id', 'user_id');
+    }
+
     // Relación con el modelo Category
     public function category()
     {
