@@ -24,9 +24,9 @@
         @else
         <div class="row mt-4">
             @foreach ($events as $event)
-            <!-- Cada evento ocupa una columna -->
-            <div class="col-md-4 mb-4">
-                <div class="card shadow-sm">
+            <div class="col-md-4 mb-4 d-flex">
+                <!-- Tarjeta del evento -->
+                <div class="card shadow-sm flex-grow-1">
                     <!-- Imagen del Evento -->
                     <img src="{{ asset('storage/'.$event->image_url) }}" alt="Imagen del evento" class="img-fluid">
                     <div class="card-body">
@@ -46,35 +46,37 @@
                         </p>
                         @endif
                         @endif
-
-                        <!-- Botones de acción -->
-                        @if (Auth::check() && Auth::user()->role === 'u')
-                            @if ($registered === true)
-                            <form action="{{ route('events.deleteFromEvent', $event->id) }}" method="POST" class="mt-2">
-                                @csrf
-                                <button type="submit" class="btn btn-danger btn-sm">Borrarse</button>
-                            </form>
-                            @else
-                            <form action="{{ route('events.register', $event->id) }}" method="POST" class="mt-2">
-                                @csrf
-                                <button type="submit" class="btn btn-primary btn-sm">Registrarse</button>
-                            </form>
-                            @endif
-                        @endif
-
-                        @if (Auth::check() && Auth::user()->role === 'o')
-                        <div class="d-flex flex-column justify-content-center mt-2 gap-2">
-                            <!-- Botón de actualizar -->
-                            <a href="{{ route('events.updateform', $event->id) }}" class="btn btn-primary btn-sm">Actualizar</a>
-                            <!-- Botón de Borrar -->
-                            <form action="{{ route('events.delete', $event) }}" method="POST" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este evento?');">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm">Borrar</button>
-                            </form>
-                        </div>
-                        @endif
                     </div>
+                </div>
+
+                <!-- Botones fuera de la tarjeta, centrados -->
+                <div class="d-flex flex-column align-items-center justify-content-center ms-2">
+                    @if (Auth::check() && Auth::user()->role === 'u')
+                        @if ($registered === true)
+                        <!-- Botón de borrarse del evento -->
+                        <form action="{{ route('events.deleteFromEvent', $event->id) }}" method="POST" class="mb-2">
+                            @csrf
+                            <button type="submit" class="btn btn-danger btn-sm">Borrarse</button>
+                        </form>
+                        @else
+                        <!-- Botón de registrarse en el evento -->
+                        <form action="{{ route('events.register', $event->id) }}" method="POST" class="mb-2">
+                            @csrf
+                            <button type="submit" class="btn btn-primary btn-sm">Registrarse</button>
+                        </form>
+                        @endif
+                    @endif
+
+                    @if (Auth::check() && Auth::user()->role === 'o')
+                    <!-- Botón de actualizar -->
+                    <a href="{{ route('events.updateform', $event->id) }}" class="btn btn-primary btn-sm mb-2">Actualizar</a>
+                    <!-- Botón de borrar -->
+                    <form action="{{ route('events.delete', $event) }}" method="POST" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este evento?');">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger btn-sm">Borrar</button>
+                    </form>
+                    @endif
                 </div>
             </div>
             @endforeach
