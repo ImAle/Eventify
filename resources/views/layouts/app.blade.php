@@ -83,6 +83,18 @@
                                     </ul>
                                 </div>
                                 @endif
+                                @if (Auth::check() && Auth::user()->role === 'u')
+                                <div class="dropdown-submenu">
+                                    <a class="dropdown-item dropdown-toggle" href="{{ route('registeredEvents')}}" id="bot" aria-expanded="false">
+                                        {{ __('Mis Eventos') }}
+                                    </a>
+                                    <!-- Submenú para filtrar eventos -->
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="{{ route('unregisteredEvents')}}">Eventos disponibles</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('registeredEvents')}}">Eventos registrados</a></li>
+                                    </ul>
+                                </div>
+                                @endif
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                     @csrf
                                 </form>

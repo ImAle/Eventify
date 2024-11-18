@@ -28,6 +28,9 @@ Route::middleware(['verified', 'active', 'auth'])->group(function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::get('/user/events/registered', function(){return app()->make(EventsController::class)->indexUser(true);})->name('registeredEvents');
     Route::get('/user/events/unregistered', function(){return app()->make(EventsController::class)->indexUser(false);})->name('unregisteredEvents');
+    Route::post('/events/register/{eventId}', [EventsController::class, 'registerToEvent'])->name('events.register');
+    Route::post('/events/unregister/{id}', [EventsController::class, 'deleteFromEvent'])->name('events.deleteFromEvent');
+
 });
 
 Route::middleware(['admin'])->group(function () {

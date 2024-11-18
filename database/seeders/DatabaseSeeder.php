@@ -40,6 +40,14 @@ class DatabaseSeeder extends Seeder
             'email_confirmed' => 1, // Email confirmado
         ]);
 
+        $usuario = User::factory() ->create([
+            'name' => 'usuario',
+            'email' => 'usuario@gmail.com',
+            'password' => bcrypt('12345678'),
+            'role' => 'u',
+            'actived' => 1, // Usuario activado
+            'email_confirmed' => 1, // Email confirmado
+        ]);
         // Crear otros usuarios si es necesario
         User::factory(10)->create();
 
