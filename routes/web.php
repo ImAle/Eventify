@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\EventsController;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\informeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,7 +31,7 @@ Route::middleware(['verified', 'active', 'auth'])->group(function () {
     Route::get('/user/events/unregistered', function(){return app()->make(EventsController::class)->indexUser(false);})->name('unregisteredEvents');
     Route::post('/events/register/{eventId}', [EventsController::class, 'registerToEvent'])->name('events.register');
     Route::post('/events/unregister/{id}', [EventsController::class, 'deleteFromEvent'])->name('events.deleteFromEvent');
-
+    Route::get('/events/generateInforme', [informeController::class,'generateInforme'])->name('events.generateInforme');
 });
 
 Route::middleware(['admin'])->group(function () {

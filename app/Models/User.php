@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\Events;
+use Illuminate\Events\EventServiceProvider;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -46,4 +48,10 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function registeredEvents()
+{
+    return $this->belongsToMany(Events::class, 'event_attendees', 'user_id', 'event_id')->withPivot('registered_at');
+}
+
 }

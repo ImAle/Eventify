@@ -17,6 +17,14 @@
     </div>
     @endif
 
+    @if (Auth::check() && Auth::user()->role === 'u' && $registered == true)
+    <div class="text-center mt-4">
+    <a href="{{ route('events.generateInforme') }}" class="btn btn-secondary">Generar Informe</a>
+    </div>
+    @endif
+    
+
+
     <!-- Contenedor centrado solo para el mensaje y los eventos -->
     <div class="container mt-5" style="min-height: 50vh;">
         @if ($events->isEmpty())
