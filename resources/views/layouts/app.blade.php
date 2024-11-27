@@ -85,7 +85,7 @@
                                 @endif
                                 @if (Auth::check() && Auth::user()->role === 'u')
                                 <div class="dropdown-submenu">
-                                    <a class="dropdown-item dropdown-toggle" href="{{ route('registeredEvents')}}" id="bot" aria-expanded="false">
+                                    <a class="dropdown-item dropdown-toggle" href="{{ route('unregisteredEvents')}}" id="bot" aria-expanded="false">
                                         {{ __('Mis Eventos') }}
                                     </a>
                                     <!-- Submenú para filtrar eventos -->
