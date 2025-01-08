@@ -136,10 +136,13 @@ class EventsController extends Controller
     public function destroy(Events $event)
     {
         // Soft delete del evento
-        $event->deleted = 1;
-        $event->save();
+        if($event->organizer_id == Auth::user()->id or Auth::user()->role == 'a'){
+            $event->deleted = 1;
+            $event->save();
+            return redirect()->back()->with('message', 'Evento marcado como eliminado.');
+        }
 
-        return redirect()->back()->with('message', 'Evento marcado como eliminado.');
+        abort(403, 'Usted no puede eliminar un evento que no es suyo');
     }
 
     public function filter($categoryName)
@@ -169,7 +172,7 @@ class EventsController extends Controller
         return view('event.event_create', compact('categories'));
     }
 
-    protected function create(array $data)
+    protected function create(Request $data)
     {
         $urlImagePath = null;
 
@@ -195,51 +198,5 @@ class EventsController extends Controller
         ]);
     }
 
-    public function store(Request $request)
-    {
-        // Validación de los datos del evento
-        $request->validate([
-            'category_id' => 'required|exists:categories,id',
-            'title' => 'required|string|max:255',
-            'start_time' => 'required|date',
-            'end_time' => 'required|date|after_or_equal:start_time',
-            'image_url' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'description' => 'nullable|string',
-            'price' => 'required|numeric|min:0',
-            'location' => 'required|string|max:255',
-            'latitude' => 'required|numeric|between:-90,90',
-            'longitude' => 'required|numeric|between:-180,180',
-            'max_attendees' => 'required|integer|min:1',
-        ]);
-
-        $event = new Events();
-        $event->organizer_id = Auth::id();
-        $event->title = $request->title;
-        $event->description = $request->description;
-        $event->category_id = $request->category_id;
-        $event->start_time = $request->start_time;
-        $event->end_time = $request->end_time;
-        $event->location = $request->location;
-        $event->latitude = $request->latitude;
-        $event->longitude = $request->longitude;
-        $event->max_attendees = $request->max_attendees;
-        $event->price = $request->price;
-        $event->deleted = 0;
-
-        if ($request->hasFile('image_url')) {
-            // Almacena la imagen en la carpeta "public/event_images" y guarda la ruta
-            $imagePath = $request->file('image_url')->store('storage/event_images', 'public');
-            $event->image_url = $imagePath;
-        } else {
-            // Da imagen por defecto
-            $imagePath = 'event_images/image_not_found.jpg';
-            $event->image_url = $imagePath;
-        }
-
-        // Guardar el evento en la base de datos
-        $event->save();
-
-        // Redireccionar con mensaje de éxito
-        return redirect()->route('events.get')->with('success', 'Evento creado exitosamente.');
-    }
+     
 }

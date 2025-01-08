@@ -47,7 +47,7 @@ Route::middleware(['organizer'])->group(function () {
     Route::get('/organizer/events', [EventsController::class, 'index'])->name('events.get');
     Route::get('/organizer/events/filter/{category}', [EventsController::class, 'filter'])->name('events.filter');
     Route::get('/organizer/events/create', [EventsController::class, 'createView'])->name('events.create');
-    Route::post('/organizer/events/create', [EventsController::class, 'store'])->name('events.store');
+    Route::post('/organizer/events/create', [EventsController::class, 'create'])->name('events.store');
     Route::get('/organizer/events/update/{id}', [EventsController::class, 'updateForm'])->name('events.updateform');
     Route::put('/organizer/events/update/{id}', [EventsController::class, 'update'])->name('events.update');
     Route::delete('/organizer/events/{event}', [EventsController::class, 'destroy'])->name('events.delete');

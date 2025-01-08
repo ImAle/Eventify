@@ -14,10 +14,12 @@ class CategoryFactory extends Factory
      *
      * @return array<string, mixed>
      */
-    public function definition(): array
+    public function definition()
     {
         return [
-            //
+            'name' => 'music',
+            'description' => $this->faker->sentence,
+            'deleted' => 0,
         ];
     }
 }
