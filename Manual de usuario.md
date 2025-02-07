@@ -24,7 +24,8 @@ La aplicacion dispone de las siguientes caracteristicas:
 7.1 [Directorio de pruebas](#id13)
 
 <hr>
-
+## Url de la aplicación
+http://http://eventify6.duckdns.org/
 ## Manual de usuario
 
 Este manual tiene como función dar a los usuarios una guía para que permita a sus usuarios el manejo correcto de la aplicación y asi aprovechar al maximo sus caracteristicas.
@@ -108,7 +109,7 @@ La API desarrollada permite a los usuarios manejar la aplicación de manera efic
 <a id="id11"></a>
 ### Endpoints
 
-- Inicio de sesión (POST) /api/login <br>
+- Inicio de sesión (POST) http://eventify6.duckdns.org/api/login <br>
 - Los datos a enviar son:<br>
    > email<br>
    > password
@@ -135,7 +136,7 @@ En caso de error:
     }
 }
 ```
-- Registro de usuario (POST) /api/register <br>
+- Registro de usuario (POST) http://eventify6.duckdns.org/api/register <br>
 - Los datos a enviar son:<br>
    > name<br>
    > email<br>
@@ -197,7 +198,7 @@ Confirmacion de contraseña vacio
     }
 }
 ```
-- Mostrar los eventos (GET) /api/events<br>
+- Mostrar los eventos (GET) http://eventify6.duckdns.org/api/events<br>
 Devuelve lo siguiente:
 ```
 {
@@ -225,7 +226,7 @@ Devuelve lo siguiente:
     "message": "Events retrieved successfully"
 }
 ```
-- Crear eventos (POST) /api/events<br>
+- Crear eventos (POST) http://eventify6.duckdns.org/api/events<br>
 - Los datos a enviar son:<br>
     > title<br>
     > description <br>
@@ -263,7 +264,7 @@ Devuelve lo siguiente:
     "message": "Event created successfully"
 }
 ```
-- Actualizar eventos (PUT) /api/events<br>
+- Actualizar eventos (PUT) http://eventify6.duckdns.org/api/events<br>
 - Los datos a enviar son:<br>
     > title<br>
     > description <br>
@@ -302,7 +303,7 @@ Devuelve lo siguiente:
 }
 ```
 
-- Eliminar eventos (DELETE) /api/events<br>
+- Eliminar eventos (DELETE) http://eventify6.duckdns.org/api/events<br>
 Devuelve lo siguiente:
 ```
 {
@@ -328,7 +329,7 @@ Devuelve lo siguiente:
     "message": "Event deleted successfully"
 }
 ```
-- Mostrar los usuarios (GET) /api/users/<br>
+- Mostrar los usuarios (GET) http://eventify6.duckdns.org/api/users/<br>
 Devuelve lo siguiente:
 ```
 {
